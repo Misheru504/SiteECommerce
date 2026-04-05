@@ -74,14 +74,18 @@ a:hover {
     color: var(--dark) !important;
     font-weight: 600;
     padding: 0.5rem 1rem !important;
+    margin: 0 0.5rem 0 0;
     border-radius: 8px;
     transition: background 0.2s, color 0.2s;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
     color: var(--orange) !important;
     background: var(--orange-bg);
+}
+.nav-link.active {
+    color: var(--white) !important;
+    background: var(--orange-light);
 }
 
 .nav-icon-link {

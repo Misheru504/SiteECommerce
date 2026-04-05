@@ -377,9 +377,21 @@ GRANT SELECT, UPDATE, INSERT, DELETE ON Utilisateur TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Client TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Panier TO client@localhost;
 
-INSERT INTO Utilisateur (email, motDePasse) VALUES ('test@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash
-INSERT INTO Client (nom, prenom, idUtilisateur) VALUES ('TestNom', 'TestPrenom', 1);
-INSERT INTO Panier (idProduit, idClient, qte) VALUES (1, 1, 3);
-INSERT INTO Panier (idProduit, idClient, qte) VALUES (3, 1, 1);
+INSERT INTO Utilisateur (email, motDePasse) VALUES ('cedric@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash
+INSERT INTO Client (nom, prenom, idUtilisateur) VALUES ('Pluh', 'Cédric', 1);
 
-SELECT * FROM Utilisateur U JOIN Client C ON C.idUtilisateur = U.idUtilisateur;
+INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Mercedes F1'), 1, 3);
+INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Château de Neuschwanstein'), 1, 1);
+INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Dracaufeu'), 1, 2);
+
+INSERT INTO Commande (dateCommande, dateLivraison, idClient) VALUES
+(NOW(), ADDDATE(dateCommande, INTERVAL 15 DAY), 1),
+('2026-02-15 14:30:25', ADDDATE(dateCommande, INTERVAL 15 DAY), 1);
+
+INSERT INTO DetailCommande (idProduit, idCommande, qte) VALUES
+((SELECT idProduit FROM Produit WHERE nom = 'Apollo Saturn V'), 1, 2),
+((SELECT idProduit FROM Produit WHERE nom = 'Camion de Commande de Sonic'), 1, 1),
+
+((SELECT idProduit FROM Produit WHERE nom = 'Bouquet de fleurs'), 2, 1),
+((SELECT idProduit FROM Produit WHERE nom = 'Train Arctique télécommandé'), 2, 3),
+((SELECT idProduit FROM Produit WHERE nom = 'WALL-E et EVE'), 2, 1);
