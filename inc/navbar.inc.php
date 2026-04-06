@@ -33,9 +33,35 @@
                     <i class="bi bi-cart3"></i>
                     <span class="badge-cart">3</span>
                 </a>
-                <a href="login.php" class="nav-icon-link" title="Mon compte">
-                    <i class="bi bi-person-circle"></i>
-                </a>
+                <!-- Menu compte (dropdown) -->
+                <div class="dropdown">
+                    <a href="#" class="nav-icon-link dropdown-toggle" data-bs-toggle="dropdown" title="Mon compte" id="accountDropdown">
+                        <i class="bi bi-person-circle"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="profil.php?tab=orders">
+                                <i class="bi bi-bag-check me-2"></i>Mes commandes
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="profil.php?tab=info">
+                                <i class="bi bi-person-gear me-2"></i>Mes informations
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="login.php">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Connexion
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="register.php">
+                                <i class="bi bi-person-plus me-2"></i>Inscription
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

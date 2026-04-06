@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once 'utils/DBUser.class.php';
+require_once 'class/DBUser.class.php';
 $db = new DBUser('site', 'P@ssw0rd');
 $db->getBddConnexion();
 $sql = 'SELECT * FROM v_Produits ORDER BY NomProduit';

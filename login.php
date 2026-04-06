@@ -11,7 +11,7 @@ if(!empty($_POST)){
             throw new Exception('Le formulaire est incomplet !');
         }
 
-        require_once 'utils/DBUser.class.php';
+        require_once 'class/DBUser.class.php';
 
         $email = $_POST['email'];
         $password = $_POST['password'];

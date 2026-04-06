@@ -6,6 +6,7 @@ class Produit
     private $description;
     private $nbPieces;
     private $prix;
+    public $prixUnformatted;
     private $oldPrice;
     private $promo;
     private $age;
@@ -19,6 +20,7 @@ class Produit
         $this->description = htmlspecialchars($produitBdd['Description']);
         $this->nbPieces = $produitBdd['NbPieces'];
         $this->prix = number_format($produitBdd['Prix'], 2, ',', ' ');
+        $this->prixUnformatted = $produitBdd['Prix'];
         $this->promo = $produitBdd['Promotion'];
         $this->oldPrice = null;
 

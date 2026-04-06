@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS Client (
     ville VARCHAR(50),
     adresse VARCHAR(50),
     codePostal CHAR(5),
+    numeroTelephone CHAR(10),
+    dateInscription DATE NOT NULL,
 
     idUtilisateur INT NOT NULL,
 
@@ -95,18 +97,16 @@ CREATE TABLE IF NOT EXISTS Panier (
     CONSTRAINT fk_panier_client FOREIGN KEY (idClient) REFERENCES Client(idClient)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+START TRANSACTION;
 INSERT INTO TypeAge (libelle) VALUES
 ('1+'), ('4+'), ('6+'), ('9+'), ('14+'), ('18+');
-
 INSERT INTO Franchise (libelle) VALUES
 ('NASA'), ('Disney'), ('Star Wars'), ('Pokémon'), ('City'), ('Marvel'), ('Ninjago'),
 ('Technic'), ('Icons'), ('Creator'), ('Architecture'), ('Harry Potter'),
 ('Speed Champions'), ('Botanicals'), ('Sonic');
-
 INSERT INTO TypeProduit (libelle) VALUES
 ('Set'), ('Figurine'), ('Collector'), ('Sachet'), ('Technic'),
 ('Casque'), ('UCS'), ('BrickHeadz'), ('Modulaire'), ('Mech');
-
 
 INSERT INTO Produit (nom, description, nbPieces, prix, promo, idAge, idType, idFranchise) VALUES
 ('Apollo Saturn V', 'Revivez les missions lunaires habitées Apollo.', 1969, 299.99, 10.00, (SELECT idAge FROM TypeAge WHERE libelle = '14+'), (SELECT idType FROM TypeProduit WHERE libelle = 'Collector'), (SELECT idFranchise FROM Franchise WHERE libelle = 'NASA')),
@@ -355,6 +355,8 @@ INSERT INTO Produit (nom, description, nbPieces, prix, promo, idAge, idType, idF
     (SELECT idAge FROM TypeAge WHERE libelle = '9+'),
     (SELECT idType FROM TypeProduit WHERE libelle = 'Mech'),
     (SELECT idFranchise FROM Franchise WHERE libelle = 'Sonic'));
+COMMIT;
+
 
 CREATE VIEW IF NOT EXISTS v_Produits (IdProduit, NomProduit, Description, NbPieces, Prix, Promotion, Type, Franchise, Age) AS
     SELECT idProduit, nom, description, nbPieces, prix, promo, TP.libelle, F.libelle, TA.libelle FROM Produit P
@@ -363,6 +365,9 @@ CREATE VIEW IF NOT EXISTS v_Produits (IdProduit, NomProduit, Description, NbPiec
     LEFT JOIN Franchise F ON F.idFranchise = P.idFranchise
     ORDER BY idProduit;
 
+CREATE VIEW IF NOT EXISTS v_Users (IdClient, NomClient, PrenomClient, MailClient, NumeroTelClient, Adresse, Ville, CodePostal, DateInscription, MotDePasse) AS
+    SELECT C.idClient, C.nom, C.prenom, U.email, C.numeroTelephone, C.adresse, C.ville, C.codePostal, C.dateInscription, U.motDePasse FROM Client C
+    JOIN Utilisateur U ON C.idUtilisateur = U.idUtilisateur;
 
 DROP USER IF EXISTS site@localhost;
 CREATE USER site@localhost IDENTIFIED BY 'P@ssw0rd';
@@ -373,6 +378,7 @@ GRANT SELECT ON Franchise TO site@localhost;
 
 DROP USER IF EXISTS client@localhost;
 CREATE USER client@localhost IDENTIFIED BY 'P@ssw0rd2';
+GRANT SELECT ON v_Users TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Utilisateur TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Client TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Panier TO client@localhost;
@@ -384,15 +390,15 @@ GRANT CREATE USER ON *.* TO admin@localhost;
 FLUSH PRIVILEGES;
 
 INSERT INTO Utilisateur (email, motDePasse) VALUES ('cedric@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash
-INSERT INTO Client (nom, prenom, idUtilisateur) VALUES ('Pluh', 'Cédric', 1);
+INSERT INTO Client (nom, prenom, ville, adresse, codePostal, numeroTelephone, dateInscription, idUtilisateur) VALUES ('Pluh', 'Cédric', 'Montpellier', '15 Rue des Oliviers', '34000', '0612345678', '2025-12-15', 1);
 
 INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Mercedes F1'), 1, 3);
 INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Château de Neuschwanstein'), 1, 1);
 INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Dracaufeu'), 1, 2);
 
 INSERT INTO Commande (dateCommande, dateLivraison, idClient) VALUES
-(NOW(), ADDDATE(dateCommande, INTERVAL 15 DAY), 1),
-('2026-02-15 14:30:25', ADDDATE(dateCommande, INTERVAL 15 DAY), 1);
+('2026-02-15 14:30:25', ADDDATE(dateCommande, INTERVAL 15 DAY), 1),
+(NOW(), null, 1);
 
 INSERT INTO DetailCommande (idProduit, idCommande, qte) VALUES
 ((SELECT idProduit FROM Produit WHERE nom = 'Apollo Saturn V'), 1, 2),
