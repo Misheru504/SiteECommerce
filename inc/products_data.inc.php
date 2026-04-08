@@ -4,50 +4,104 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once 'class/DBUser.class.php';
-$db = new DBUser('site', 'P@ssw0rd');
-$db->getBddConnexion();
-$sql = 'SELECT * FROM v_Produits ORDER BY NomProduit';
-$productsFromBDD = $db->sendRequest($sql);
+require_once 'class/Produit.class.php';
 
-// === Fonctions utilitaires ===
+class ProduitsData
+{
+    private const LOGIN = 'site';
+    private const PASSWORD = 'P@ssw0rd';
+    private static ?DBUser $siteDB = null;
 
-/**
- * Retrouver un produit par son ID
- */
-function getProductById(int $id, array $products): ?array {
-    foreach ($products as $product) {
-        if ($product['IdProduit'] === $id) {
-            return $product;
-        }
+    public static function connexion()
+    {
+        self::$siteDB = new DBUser(self::LOGIN, self::PASSWORD);
+        self::$siteDB->getBddConnexion();
     }
-    return null;
-}
 
-/**
- * Filtrer les produits par catégorie
- */
-function getProductsByCategory(string $category, array $products): array {
-    return array_filter($products, fn($p) => $p['category'] === $category);
-}
+    public static function getAllProduits(): array
+    {
+        self::isConnected();
 
-/**
- * Récupérer les produits en promo
- */
-function getPromoProducts(array $products): array {
-    return array_filter($products, fn($p) => $p['Promotion'] != 0.00);
-}
+        $sql = 'SELECT * FROM v_Produits ORDER BY IdProduit';
+        $result = self::$siteDB->sendRequest($sql);
+        return ProduitsData::class::parseSqlDansArray($result);
 
-/**
- * Récupérer les produits mis en avant
- */
-function getFeaturedProducts(array $products): array {
-    return array_filter($products, fn($p) => $p['featured'] === true);
-}
+    }
 
-/**
- * Récupérer les thèmes uniques
- */
-function getUniqueFranchises(array $products): array {
-    $themes = array_unique(array_column($products, 'Franchise'));
-    return $themes;
+    public static function getProduitById(int $id): ?Produit
+    {
+        self::isConnected();
+
+        $sql = 'SELECT * FROM v_Produits WHERE IdProduit = ?';
+        $result = self::$siteDB->sendRequest($sql, [$id]);
+
+        return !empty($result) ? new Produit($result[0]) : null;
+    }
+
+    public static function getProduitsByFranchise(string $franchise): array
+    {
+        self::isConnected();
+
+        $sql = 'SELECT * FROM v_Produits WHERE Franchise = ?';
+        $result = self::$siteDB->sendRequest($sql, [$franchise]);
+
+        return ProduitsData::class::parseSqlDansArray($result);
+    }
+
+    public static function getProduitsByType(string $type): array
+    {
+        self::isConnected();
+
+        $sql = 'SELECT * FROM v_Produits WHERE Type = ?';
+        $result = self::$siteDB->sendRequest($sql, [$type]);
+
+        return ProduitsData::class::parseSqlDansArray($result);
+    }
+
+    public static function getProduitsSimilaire(Produit $produit): array
+    {
+        self::isConnected();
+
+        $sql = 'SELECT * FROM v_Produits WHERE Franchise = ? AND IdProduit != ?';
+        $result = self::$siteDB->sendRequest($sql, [$produit->getFranchise(), $produit->getId()]);
+
+        return ProduitsData::class::parseSqlDansArray($result);
+    }
+
+    public static function getProduitsEnPromotion(): array
+    {
+        self::isConnected();
+
+        $sql = 'SELECT * FROM v_Produits WHERE Promotion != 0';
+        $result = self::$siteDB->sendRequest($sql);
+
+        return ProduitsData::class::parseSqlDansArray($result);
+    }
+
+    public static function getFranchises(): array
+    {
+        self::isConnected();
+
+        $sql = 'SELECT distinct Franchise FROM v_Produits';
+        return array_column(self::$siteDB->sendRequest($sql), 'Franchise');
+    }
+
+    private static function parseSqlDansArray(array $produits): array
+    {
+        $listeProduits = [];
+        if(!empty($produits))
+        {
+            foreach($produits as $produit)
+            {
+                $listeProduits[] = new Produit($produit);
+            }
+        }
+
+        return $listeProduits;
+    }
+
+    private static function isConnected()
+    {
+        if(!isset(self::$siteDB)) die('Non connecté à la base de donnée !');
+    }
 }

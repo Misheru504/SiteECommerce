@@ -7,16 +7,20 @@ include('inc/products_data.inc.php');
 $filterCategory = $_GET['cat'] ?? 'all';
 $filterTheme = $_GET['theme'] ?? 'all';
 
-$filteredProducts = $productsFromBDD;
+ProduitsData::connexion();
+$filteredProducts = ProduitsData::getAllProduits();
 
 if ($filterCategory !== 'all') {
-    $filteredProducts = array_filter($filteredProducts, fn($p) => $p['Type'] === $filterCategory);
+    /** @var Produit $p */
+    $filteredProducts = array_filter($filteredProducts, fn($p) => $p->getType() == $filterCategory);
 }
 if ($filterTheme !== 'all') {
-    $filteredProducts = array_filter($filteredProducts, fn($p) => $p['Franchise'] === $filterTheme);
+
+    /** @var Produit $p */
+    $filteredProducts = array_filter($filteredProducts, fn($p) => $p->getFranchise() == $filterTheme);
 }
 
-$themes = getUniqueFranchises($productsFromBDD);
+$themes = ProduitsData::getFranchises();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -50,10 +54,10 @@ $themes = getUniqueFranchises($productsFromBDD);
                 <a href="boutique.php" class="filter-btn <?php echo $filterCategory === 'all' && $filterTheme === 'all' ? 'active' : ''; ?>">
                     Tout
                 </a>
-                <a href="boutique.php?cat=set" class="filter-btn <?php echo $filterCategory === 'set' ? 'active' : ''; ?>">
+                <a href="boutique.php?cat=Set" class="filter-btn <?php echo $filterCategory === 'Set' ? 'active' : ''; ?>">
                     <i class="bi bi-box me-1"></i>Sets
                 </a>
-                <a href="boutique.php?cat=figurine" class="filter-btn <?php echo $filterCategory === 'figurine' ? 'active' : ''; ?>">
+                <a href="boutique.php?cat=Figurine" class="filter-btn <?php echo $filterCategory === 'Figurine' ? 'active' : ''; ?>">
                     <i class="bi bi-person-standing me-1"></i>Figurines
                 </a>
             </div>
@@ -75,7 +79,7 @@ $themes = getUniqueFranchises($productsFromBDD);
             </p>
 
             <!-- Grille produits -->
-            <?php if (count($filteredProducts) > 0): ?>
+            <?php if (!empty($filteredProducts)): ?>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
                     <?php foreach ($filteredProducts as $product): ?>
                         <?php include('inc/product_card.inc.php'); ?>

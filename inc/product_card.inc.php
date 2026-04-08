@@ -1,13 +1,8 @@
 <?php
-/**
- * Carte produit réutilisable.
- * Attend une variable $product (tableau associatif).
- * Usage : inclure ce fichier après avoir défini $product.
- */
-
 require_once './class/Produit.class.php';
 
-$productObj = new Produit($product);
+/** @var Produit $productObj */
+$productObj = $product;
 ?>
 <div class="col">
     <div class="card product-card h-100">
@@ -17,9 +12,7 @@ $productObj = new Produit($product);
 
         <!-- Image placeholder -->
         <a href="produit.php?id=<?php echo $productObj->getId(); ?>">
-            <div class="product-img-placeholder">
-                <span class="placeholder-text"><?php echo $productObj->getNbPieces(); ?> pcs</span>
-            </div>
+            <img class="product-img" src="img/<?php echo $productObj->getId(); ?>.jpg" alt="<?php echo $productObj->getNom(); ?>">
         </a>
 
         <div class="card-body d-flex flex-column">

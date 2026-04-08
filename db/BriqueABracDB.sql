@@ -382,6 +382,8 @@ GRANT SELECT ON v_Users TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Utilisateur TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Client TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Panier TO client@localhost;
+GRANT SELECT, UPDATE, INSERT, DELETE ON Commande TO client@localhost;
+GRANT SELECT, UPDATE, INSERT, DELETE ON DetailCommande TO client@localhost;
 
 DROP USER IF EXISTS admin@localhost;
 CREATE USER admin@localhost IDENTIFIED BY 'password';

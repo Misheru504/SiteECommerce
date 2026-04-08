@@ -32,7 +32,7 @@ class DBUser
         }
     }
 
-    function sendRequest($request, $stmtParams = null)
+    function sendRequest($request, $stmtParams = null): array
     {
         if(!isset($this->cnx)) { die('Non connecté à la base de donnée. '); }
 

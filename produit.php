@@ -4,12 +4,14 @@ include('inc/products_data.inc.php');
 
 // Récupérer l'ID du produit
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$product = getProductById($id, $productsFromBDD);
 
-if (!$product) {
+ProduitsData::class::connexion();
+$produitObj = ProduitsData::class::getProduitById($id);
+
+if (!$produitObj) {
     $pageTitle = 'Produit introuvable';
 } else {
-    $pageTitle = $product['name'];
+    $pageTitle = $produitObj->getNom();
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +37,7 @@ if (!$product) {
 
     <section class="py-5">
         <div class="container">
-            <?php if (!$product): ?>
+            <?php if (!$produitObj): ?>
                 <div class="empty-state">
                     <i class="bi bi-emoji-frown d-block"></i>
                     <h4>Produit introuvable</h4>
@@ -46,54 +48,52 @@ if (!$product) {
                 <div class="row g-5">
                     <!-- Image -->
                     <div class="col-lg-6">
-                        <div class="product-detail-img">
-                            <span class="placeholder-text" style="font-size: 1.2rem;">300 x 300</span>
-                        </div>
+                        <img class="product-img" src="img/<?php echo $produitObj->getId(); ?>.jpg" alt="<?php echo $produitObj->getNom(); ?>">
                     </div>
 
                     <!-- Infos -->
                     <div class="col-lg-6 product-detail-info">
-                        <span class="product-theme"><?php echo htmlspecialchars($product['Franchise']); ?></span>
-                        <h1 class="product-name"><?php echo htmlspecialchars($product['NomProduit']); ?></h1>
+                        <span class="product-theme"><?php echo $produitObj->getFranchise(); ?></span>
+                        <h1 class="product-name"><?php echo $produitObj->getNom(); ?></h1>
 
                         <!-- Prix -->
                         <div class="product-price mb-3">
-                            <!-- <?php if ($product['old_price']): ?>
+                            <?php if ($produitObj->getPromo() != 0): ?>
                                 <span class="old-price" style="font-size: 1.1rem;">
-                                    <?php echo number_format($product['old_price'], 2, ',', ' '); ?> &euro;
+                                    <?php echo $produitObj->getOldPrice(); ?> &euro;
                                 </span>
-                            <?php endif; ?> -->
+                            <?php endif; ?>
                             <span class="current-price" style="font-size: 1.75rem;">
-                                <?php echo number_format($product['Prix'], 2, ',', ' '); ?> &euro;
+                                <?php echo $produitObj->getPrix(); ?> &euro;
                             </span>
-                            <?php if ($product['Promotion'] != 0): ?>
+                            <?php if ($produitObj->getPromo() != 0): ?>
                                 <span class="badge bg-danger ms-2">PROMO</span>
                             <?php endif; ?>
                         </div>
 
                         <!-- Description -->
                         <p class="product-description">
-                            <?php echo htmlspecialchars($product['Description']); ?>
+                            <?php echo $produitObj->getDescription(); ?>
                         </p>
 
                         <!-- Spécifications -->
                         <div class="product-specs">
                             <div class="product-spec">
                                 <i class="bi bi-puzzle"></i>
-                                <span><?php echo $product['NbPieces']; ?> pièces</span>
+                                <span><?php echo $produitObj->getNbPieces(); ?> pièces</span>
                             </div>
                             <div class="product-spec">
                                 <i class="bi bi-person"></i>
-                                <span>Âge : <?php echo $product['Age']; ?></span>
+                                <span>Âge : <?php echo $produitObj->getAge(); ?></span>
                             </div>
                             <div class="product-spec">
                                 <i class="bi bi-tag"></i>
-                                <span><?php echo ucfirst($product['Type']); ?></span>
+                                <span><?php echo $produitObj->getFranchise(); ?></span>
                             </div>
                         </div>
 
                         <!-- Ajouter au panier -->
-                        <a href="panier.php?add=<?php echo $product['id']; ?>" class="btn btn-add-cart btn-lg w-100">
+                        <a href="panier.php?add=<?php echo $product['IdProduit']; ?>" class="btn btn-add-cart btn-lg w-100">
                             <i class="bi bi-cart-plus me-2"></i>Ajouter au panier
                         </a>
                     </div>
@@ -101,15 +101,13 @@ if (!$product) {
 
                 <!-- Produits similaires -->
                 <?php
-                $similar = array_filter($products, fn($p) =>
-                    $p['Franchise'] === $product['Franchise'] && $p['IdProduit'] !== $product['IdProduit']
-                );
+                $similaire = ProduitsData::class::getProduitsSimilaire($produitObj);
                 ?>
-                <?php if (count($similar) > 0): ?>
+                <?php if (!empty($similaire)): ?>
                     <hr class="my-5">
                     <h3 class="section-title mb-4">Produits similaires</h3>
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-                        <?php foreach (array_slice($similar, 0, 4) as $product): ?>
+                        <?php foreach (array_slice($similaire, 0, 4) as $product): ?>
                             <?php include('inc/product_card.inc.php'); ?>
                         <?php endforeach; ?>
                     </div>

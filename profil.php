@@ -6,18 +6,23 @@ require_once 'class/Commande.class.php';
 require_once 'class/Produit.class.php';
 require_once 'class/DBUser.class.php';
 
-$userDB = new DBUser('admin', 'password');
-$userDB->getBddConnexion();
+$clientDB = new DBUser('client', 'P@ssw0rd2');
+$siteDB = new DBUser('site', 'P@ssw0rd');
 
-$user = $userDB->sendRequest('SELECT idclient, nomclient, prenomclient, mailclient, numerotelclient, adresse, ville, codepostal, dateinscription FROM v_Users WHERE IdClient = ?', [1])[0];
-$commandesArray = $userDB->sendRequest('SELECT idCommande, dateCommande, dateLivraison FROM Commande WHERE idClient = ? ORDER BY dateCommande DESC;', [1]);
-$commandes = [];
+$clientDB->getBddConnexion();
+$siteDB->getBddConnexion();
+
+$user = $clientDB->sendRequest('SELECT idclient, nomclient, prenomclient, mailclient, numerotelclient, adresse, ville, codepostal, dateinscription FROM v_Users WHERE IdClient = ?', [1])[0];
+$commandesArray = $clientDB->sendRequest('SELECT idCommande, dateCommande, dateLivraison FROM Commande WHERE idClient = ? ORDER BY dateCommande DESC;', [1]);
 foreach ($commandesArray as $commande)
 {
     $commandes[] = new Commande($commande);
 }
 
+// Il existe une liste $commande possédant toutes les commandes du client sous forme d'objets
+
 // Libellés et couleurs pour les statuts
+// TODO: Status des commandes dans la BDD
 $statusLabels = [
     'pending'   => ['label' => 'En attente',  'class' => 'bg-warning text-dark'],
     'confirmed' => ['label' => 'Confirmée',   'class' => 'bg-info text-white'],
@@ -107,10 +112,10 @@ $activeTab = $_GET['tab'] ?? 'orders';
                         <?php else: ?>
                             <?php foreach ($commandes as $commande): ?>
                                 <?php
-                                $produitsCommande = $userDB->sendRequest('SELECT idProduit, qte FROM DetailCommande WHERE idCommande = ?', [$commande->getIdCommande()]);
+                                $produitsCommande = $clientDB->sendRequest('SELECT idProduit, qte FROM DetailCommande WHERE idCommande = ?', [$commande->getIdCommande()]);
                                 foreach($produitsCommande as $produit)
                                 {
-                                    $produitInfo = $userDB->sendRequest('SELECT * FROM v_Produits WHERE IdProduit = ?', [$produit['idProduit']])[0];
+                                    $produitInfo = $siteDB->sendRequest('SELECT * FROM v_Produits WHERE IdProduit = ?', [$produit['idProduit']])[0];
                                     $produitObj = new Produit($produitInfo);
                                     $commande->addProduit($produitObj, $produit['qte']);
                                 }

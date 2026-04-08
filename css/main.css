@@ -167,7 +167,8 @@ a:hover {
 .btn-hero:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    color: var(--orange-dark);
+    background: var(--white);
+    color: var(--orange);
 }
 
 /* ---- Section Titles ---- */
@@ -232,6 +233,13 @@ a:hover {
     align-items: center;
     justify-content: center;
     position: relative;
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .placeholder-text {
@@ -727,6 +735,7 @@ a:hover {
     display: block;
     padding: 0.6rem 1rem;
     border-radius: 8px;
+    margin: 0 0 0.5rem 0;
     color: var(--dark);
     font-weight: 600;
     font-size: 0.9rem;

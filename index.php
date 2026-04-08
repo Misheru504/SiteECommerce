@@ -2,7 +2,9 @@
 $currentPage = 'index';
 $pageTitle = 'Accueil';
 
-include('inc/products_data.inc.php');
+require_once('inc/products_data.inc.php');
+ProduitsData::connexion();
+$produitsEnPromo = ProduitsData::getProduitsEnPromotion();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -31,7 +33,7 @@ include('inc/products_data.inc.php');
             <hr class="section-divider">
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
-                <?php foreach (getPromoProducts($productsFromBDD) as $product): ?>
+                <?php foreach ($produitsEnPromo as $product): ?>
                     <?php include('inc/product_card.inc.php'); ?>
                 <?php endforeach; ?>
             </div>
