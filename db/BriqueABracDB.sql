@@ -392,7 +392,7 @@ GRANT CREATE USER ON *.* TO admin@localhost;
 FLUSH PRIVILEGES;
 
 INSERT INTO Utilisateur (email, motDePasse) VALUES ('cedric@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash
-INSERT INTO Client (nom, prenom, ville, adresse, codePostal, numeroTelephone, dateInscription, idUtilisateur) VALUES ('Pluh', 'Cédric', 'Montpellier', '15 Rue des Oliviers', '34000', '0612345678', '2025-12-15', 1);
+INSERT INTO Client (nom, prenom, ville, adresse, codePostal, numeroTelephone, dateInscription, idUtilisateur) VALUES ('Perez', 'Cédric', 'Montpellier', '15 Rue des Oliviers', '34000', '0612345678', '2025-12-15', 1);
 
 INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Mercedes F1'), 1, 3);
 INSERT INTO Panier (idProduit, idClient, qte) VALUES ((SELECT idProduit FROM Produit WHERE nom = 'Château de Neuschwanstein'), 1, 1);
