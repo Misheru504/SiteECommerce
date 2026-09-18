@@ -17,8 +17,10 @@ $cart = [
 $cartItems = [];
 $subtotal = 0;
 
+ProduitsData::connexion();
+
 foreach ($cart as $productId => $qty) {
-    $p = getProductById($productId, $productsFromBDD);
+    $p = ProduitsData::getProduitById($productId);
     if ($p) {
         $p['qty'] = $qty;
         $p['total'] = $p['Prix'] * $qty;
