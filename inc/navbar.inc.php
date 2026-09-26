@@ -1,4 +1,9 @@
 <!-- Navbar -->
+<?php
+/**
+ * @var $currentPage string Page actuelle sur la barre de navigation
+ */
+?>
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <!-- Logo / Nom du site -->
@@ -16,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($currentPage ?? '') === 'index' ? 'active' : ''; ?>" href="index.php">
+                    <a class="nav-link <?php echo ($currentPage ?? '') === 'accueil' ? 'active' : ''; ?>" href="index.php">
                         <i class="bi bi-house-door me-1"></i>Accueil
                     </a>
                 </li>
