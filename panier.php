@@ -74,7 +74,7 @@ $total = $subtotal + $shipping;
                                 </div>
                                 <div class="cart-item-info">
                                     <div class="cart-item-name">
-                                        <a href="produit.php?id=<?php echo $item['IdProduit']; ?>">
+                                        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $item['IdProduit']; ?>">
                                             <?php echo htmlspecialchars($item['NomProduit']); ?>
                                         </a>
                                     </div>

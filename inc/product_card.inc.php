@@ -1,7 +1,10 @@
 <?php
 require_once './class/Produit.class.php';
 
-/** @var Produit $productObj */
+/**
+ * @var Produit $productObj
+ * @var Produit $product
+ */
 $productObj = $product;
 ?>
 <div class="col">
@@ -11,7 +14,7 @@ $productObj = $product;
         <?php endif; ?>
 
         <!-- Image placeholder -->
-        <a href="produit.php?id=<?php echo $productObj->getId(); ?>">
+        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $productObj->getId(); ?>">
             <img class="product-img" src="img/<?php echo $productObj->getId(); ?>.jpg" alt="<?php echo $productObj->getNom(); ?>">
         </a>
 
@@ -21,7 +24,7 @@ $productObj = $product;
 
             <!-- Nom -->
             <h5 class="product-name">
-                <a href="produit.php?id=<?php echo $productObj->getId(); ?>">
+                <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $productObj->getId(); ?>">
                     <?php echo $productObj->getNom(); ?>
                 </a>
             </h5>

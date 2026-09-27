@@ -169,7 +169,7 @@ $activeTab = $_GET['tab'] ?? 'orders';
                                                     <span class="placeholder-text" style="font-size: 0.6rem;">IMG</span>
                                                 </div>
                                                 <div class="order-item-info">
-                                                    <a href="produit.php?id=<?php echo $itemObj->getId(); ?>" class="order-item-name">
+                                                    <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $itemObj->getId() ?>" class="order-item-name">
                                                         <?php echo $itemObj->getNom(); ?>
                                                     </a>
                                                     <span class="order-item-detail">
