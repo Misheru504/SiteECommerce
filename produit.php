@@ -28,7 +28,7 @@ if (!$produitObj) {
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                    <li class="breadcrumb-item"><a href="boutique.php">Boutique</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>">Boutique</a></li>
                     <li class="breadcrumb-item active"><?php echo $pageTitle; ?></li>
                 </ol>
             </nav>
@@ -42,7 +42,7 @@ if (!$produitObj) {
                     <i class="bi bi-emoji-frown d-block"></i>
                     <h4>Produit introuvable</h4>
                     <p>Ce produit n'existe pas ou a été retiré.</p>
-                    <a href="boutique.php" class="btn btn-add-cart">Retour à la boutique</a>
+                    <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-add-cart">Retour à la boutique</a>
                 </div>
             <?php else: ?>
                 <div class="row g-5">

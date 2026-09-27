@@ -351,10 +351,10 @@ GRANT SELECT, UPDATE, INSERT, DELETE ON Panier TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON Commande TO client@localhost;
 GRANT SELECT, UPDATE, INSERT, DELETE ON DetailCommande TO client@localhost;
 
-DROP USER IF EXISTS admin@localhost;
-CREATE USER admin@localhost IDENTIFIED BY 'password';
-GRANT ALL ON BriqueABrac.* TO admin@localhost WITH GRANT OPTION;
-GRANT CREATE USER ON *.* TO admin@localhost;
+DROP USER IF EXISTS BAB_app@localhost;
+CREATE USER BAB_app@localhost IDENTIFIED BY 'P@ssw0rd';
+GRANT ALL ON BriqueABrac.* TO BAB_app@localhost WITH GRANT OPTION;
+GRANT CREATE USER ON *.* TO BAB_app@localhost;
 FLUSH PRIVILEGES;
 
 INSERT INTO Utilisateur (idUtilisateur, email, motDePasse) VALUES (1, 'cedric@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash

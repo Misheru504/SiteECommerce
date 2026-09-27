@@ -1,33 +1,19 @@
 <?php
-$currentPage = 'boutique';
-$pageTitle = 'Boutique';
-include('inc/products_data.inc.php');
-
-// Filtrage simple par catégorie (GET)
-$filterCategory = $_GET['cat'] ?? 'all';
-$filterTheme = $_GET['theme'] ?? 'all';
-
-ProduitsData::connexion();
-$filteredProducts = ProduitsData::getAllProduits();
-
-if ($filterCategory !== 'all') {
-    /** @var Produit $p */
-    $filteredProducts = array_filter($filteredProducts, fn($p) => $p->getType() == $filterCategory);
-}
-if ($filterTheme !== 'all') {
-
-    /** @var Produit $p */
-    $filteredProducts = array_filter($filteredProducts, fn($p) => $p->getFranchise() == $filterTheme);
-}
-
-$themes = ProduitsData::getFranchises();
+/**
+ * @var $pageTitle string Titre de la page
+ * @var $currentPage string Page navbar
+ * @var $filterCategory string Categorie triée actuellement
+ * @var $filterTheme string Theme trié actuellement
+ * @var $filteredProducts array<Produit> Liste des produits à afficher sur la page
+ * @var $themes array<string> Liste des franchises
+ */
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <?php include('inc/header.inc.php'); ?>
-</head>
-<body>
+    <head>
+        <?php include('inc/header.inc.php'); ?>
+    </head>
+    <body>
     <?php include('inc/navbar.inc.php'); ?>
 
     <!-- Breadcrumb -->
@@ -35,7 +21,7 @@ $themes = ProduitsData::getFranchises();
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>">Accueil</a></li>
                     <li class="breadcrumb-item active">Boutique</li>
                 </ol>
             </nav>
@@ -51,13 +37,13 @@ $themes = ProduitsData::getFranchises();
 
             <!-- Filtres catégorie -->
             <div class="d-flex flex-wrap gap-2 mb-3">
-                <a href="boutique.php" class="filter-btn <?php echo $filterCategory === 'all' && $filterTheme === 'all' ? 'active' : ''; ?>">
+                <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="filter-btn <?php echo $filterCategory === 'all' && $filterTheme === 'all' ? 'active' : ''; ?>">
                     Tout
                 </a>
-                <a href="boutique.php?cat=Set" class="filter-btn <?php echo $filterCategory === 'Set' ? 'active' : ''; ?>">
+                <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage&cat=Set"?>" class="filter-btn <?php echo $filterCategory === 'Set' ? 'active' : ''; ?>">
                     <i class="bi bi-box me-1"></i>Sets
                 </a>
-                <a href="boutique.php?cat=Figurine" class="filter-btn <?php echo $filterCategory === 'Figurine' ? 'active' : ''; ?>">
+                <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage&cat=Figurine"?>" class="filter-btn <?php echo $filterCategory === 'Figurine' ? 'active' : ''; ?>">
                     <i class="bi bi-person-standing me-1"></i>Figurines
                 </a>
             </div>
@@ -65,7 +51,7 @@ $themes = ProduitsData::getFranchises();
             <!-- Filtres thème -->
             <div class="d-flex flex-wrap gap-2 mb-4">
                 <?php foreach ($themes as $theme): ?>
-                    <a href="boutique.php?theme=<?php echo urlencode($theme); ?>"
+                    <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage&theme=".urlencode($theme); ?>"
                        class="filter-btn <?php echo $filterTheme === $theme ? 'active' : ''; ?>"
                        style="font-size: 0.8rem; padding: 0.3rem 0.9rem;">
                         <?php echo htmlspecialchars($theme); ?>
@@ -90,12 +76,12 @@ $themes = ProduitsData::getFranchises();
                     <i class="bi bi-search d-block"></i>
                     <h4>Aucun produit trouvé</h4>
                     <p>Essayez de modifier vos filtres.</p>
-                    <a href="boutique.php" class="btn btn-add-cart">Voir tout</a>
+                    <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-add-cart">Voir tout</a>
                 </div>
             <?php endif; ?>
         </div>
     </section>
 
     <?php include('inc/footer.inc.php'); ?>
-</body>
+    </body>
 </html>

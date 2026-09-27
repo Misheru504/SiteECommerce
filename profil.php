@@ -107,7 +107,7 @@ $activeTab = $_GET['tab'] ?? 'orders';
                                 <i class="bi bi-bag-x d-block"></i>
                                 <h4>Aucune commande</h4>
                                 <p>Vous n'avez pas encore passé de commande.</p>
-                                <a href="boutique.php" class="btn btn-add-cart">Voir la boutique</a>
+                                <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-add-cart">Voir la boutique</a>
                             </div>
                         <?php else: ?>
                             <?php foreach ($commandes as $commande): ?>

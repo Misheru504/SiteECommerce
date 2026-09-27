@@ -18,7 +18,7 @@
     <div class="container">
         <h1>Bienvenue chez Brique-à-Brac</h1>
         <p>Votre boutique en ligne de sets et figurines LEGO. Trouvez les briques de vos rêves !</p>
-        <a href="boutique.php" class="btn btn-hero">
+        <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-hero">
             <i class="bi bi-shop me-2"></i>Voir la boutique
         </a>
     </div>
@@ -46,7 +46,7 @@
             <span class="badge-discount">-15%</span>
             <h3 class="mt-2">Offre spéciale Star Wars</h3>
             <p class="mb-3 opacity-75">Avec le code <strong>FORCE15</strong> sur toute la gamme Star Wars !</p>
-            <a href="boutique.php" class="btn btn-hero">En profiter</a>
+            <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-hero">En profiter</a>
         </div>
     </div>
 </section>

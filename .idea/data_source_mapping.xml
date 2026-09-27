@@ -3,6 +3,7 @@
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/db/BriqueABracDB.sql" value="b17d2e77-28dc-42e7-b1b3-51c0b1eefece" />
     <file url="file://$PROJECT_DIR$/login.php" value="74a88bed-6be7-4f3a-afc0-149551af0119" />
+    <file url="file://$PROJECT_DIR$/model/ProduitManager.php" value="f12f8eb5-6e9a-4603-ac60-9cf16bce87bf" />
     <file url="file://$PROJECT_DIR$/profil.php" value="74a88bed-6be7-4f3a-afc0-149551af0119" />
   </component>
 </project>

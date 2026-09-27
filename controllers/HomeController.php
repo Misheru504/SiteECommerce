@@ -10,8 +10,7 @@ class HomeController
      */
     public static function showMainPage(array $params): void
     {
-        ProduitsData::connexion();
-        $produitsEnPromo = ProduitsData::getProduitsEnPromotion();
+        $produitsEnPromo = ProduitManager::getProduitsEnPromotion();
 
         $pageTitle = "Accueil";
         $currentPage = "accueil";

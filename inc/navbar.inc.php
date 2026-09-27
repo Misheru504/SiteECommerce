@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($currentPage ?? '') === 'boutique' ? 'active' : ''; ?>" href="boutique.php">
+                    <a class="nav-link <?php echo ($currentPage ?? '') === 'boutique' ? 'active' : ''; ?>" href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>">
                         <i class="bi bi-shop me-1"></i>Boutique
                     </a>
                 </li>

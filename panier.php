@@ -61,7 +61,7 @@ $total = $subtotal + $shipping;
                     <i class="bi bi-cart-x d-block"></i>
                     <h4>Votre panier est vide</h4>
                     <p>Ajoutez des produits pour commencer vos achats.</p>
-                    <a href="boutique.php" class="btn btn-add-cart">Voir la boutique</a>
+                    <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="btn btn-add-cart">Voir la boutique</a>
                 </div>
             <?php else: ?>
                 <div class="row g-4">
@@ -127,7 +127,7 @@ $total = $subtotal + $shipping;
                             </a>
 
                             <div class="text-center mt-3">
-                                <a href="boutique.php" class="text-muted small">
+                                <a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>" class="text-muted small">
                                     <i class="bi bi-arrow-left me-1"></i>Continuer mes achats
                                 </a>
                             </div>

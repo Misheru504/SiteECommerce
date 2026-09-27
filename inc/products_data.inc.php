@@ -8,7 +8,7 @@ require_once 'class/Produit.class.php';
 
 class ProduitsData
 {
-    private const LOGIN = 'site';
+    private const LOGIN = 'BAB_app';
     private const PASSWORD = 'P@ssw0rd';
     private static ?DBUser $siteDB = null;
 
@@ -24,7 +24,7 @@ class ProduitsData
 
         $sql = 'SELECT * FROM v_Produits ORDER BY IdProduit';
         $result = self::$siteDB->sendRequest($sql);
-        return ProduitsData::class::parseSqlDansArray($result);
+        return self::parseSqlDansArray($result);
 
     }
 
@@ -45,7 +45,7 @@ class ProduitsData
         $sql = 'SELECT * FROM v_Produits WHERE Franchise = ?';
         $result = self::$siteDB->sendRequest($sql, [$franchise]);
 
-        return ProduitsData::class::parseSqlDansArray($result);
+        return self::parseSqlDansArray($result);
     }
 
     public static function getProduitsByType(string $type): array
@@ -55,7 +55,7 @@ class ProduitsData
         $sql = 'SELECT * FROM v_Produits WHERE Type = ?';
         $result = self::$siteDB->sendRequest($sql, [$type]);
 
-        return ProduitsData::class::parseSqlDansArray($result);
+        return self::parseSqlDansArray($result);
     }
 
     public static function getProduitsSimilaire(Produit $produit): array
@@ -65,7 +65,7 @@ class ProduitsData
         $sql = 'SELECT * FROM v_Produits WHERE Franchise = ? AND IdProduit != ?';
         $result = self::$siteDB->sendRequest($sql, [$produit->getFranchise(), $produit->getId()]);
 
-        return ProduitsData::class::parseSqlDansArray($result);
+        return self::parseSqlDansArray($result);
     }
 
     public static function getProduitsEnPromotion(): array
@@ -75,7 +75,7 @@ class ProduitsData
         $sql = 'SELECT * FROM v_Produits WHERE Promotion != 0';
         $result = self::$siteDB->sendRequest($sql);
 
-        return ProduitsData::class::parseSqlDansArray($result);
+        return self::parseSqlDansArray($result);
     }
 
     public static function getFranchises(): array
