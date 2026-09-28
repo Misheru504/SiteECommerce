@@ -27,6 +27,18 @@ CREATE TABLE IF NOT EXISTS Client (
     CONSTRAINT fk_client_utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(idUtilisateur)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS Token (
+    idToken INT NOT NULL AUTO_INCREMENT,
+    tokenHash CHAR(64) NOT NULL UNIQUE,
+    dateExpiration DATETIME NOT NULL,
+    nomAppareil VARCHAR(50),
+
+    idUtilisateur INT NOT NULL,
+
+    CONSTRAINT pk_token PRIMARY KEY (idToken),
+    CONSTRAINT fk_token_utilisateur FOREIGN KEY (idUtilisateur) REFERENCES Utilisateur(idUtilisateur)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE IF NOT EXISTS Commande (
     idCommande INT NOT NULL AUTO_INCREMENT,
     dateCommande DATETIME,
@@ -331,8 +343,8 @@ CREATE VIEW IF NOT EXISTS v_Produits (IdProduit, CodeSet, NomProduit, Descriptio
     LEFT JOIN Franchise F ON F.idFranchise = P.idFranchise
     ORDER BY idProduit;
 
-CREATE VIEW IF NOT EXISTS v_Users (IdClient, NomClient, PrenomClient, MailClient, NumeroTelClient, Adresse, Ville, CodePostal, DateInscription, MotDePasse) AS
-    SELECT C.idClient, C.nom, C.prenom, U.email, C.numeroTelephone, C.adresse, C.ville, C.codePostal, C.dateInscription, U.motDePasse FROM Client C
+CREATE VIEW IF NOT EXISTS v_Users (IdClient, IdUtilisateur, NomClient, PrenomClient, MailClient, NumeroTelClient, Adresse, Ville, CodePostal, DateInscription, MotDePasse) AS
+    SELECT C.idClient, C.idUtilisateur, C.nom, C.prenom, U.email, C.numeroTelephone, C.adresse, C.ville, C.codePostal, C.dateInscription, U.motDePasse FROM Client C
     JOIN Utilisateur U ON C.idUtilisateur = U.idUtilisateur;
 
 DROP USER IF EXISTS site@localhost;

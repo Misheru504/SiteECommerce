@@ -14,9 +14,10 @@ class DatabaseManager {
     /**
      * Créer une connexion avec la base de données
      *
-     * @return PDO
+     * @return void
      */
-    public static function getConnection(): PDO{
+    private static function getConnection(): void
+    {
         if(self::$cnx == null){
             $dsn = 'mysql:host='. self::HOST.';port='.self::PORT.';dbname='. self::DBNAME.';charset='.self::CHARSET;
             try {
@@ -26,7 +27,6 @@ class DatabaseManager {
                 die('Erreur : ' . $e->getMessage());
             }
         }
-        return self::$cnx;
     }
 
     /**

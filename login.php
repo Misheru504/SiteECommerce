@@ -48,6 +48,11 @@ if(!empty($_POST)){
                     <h2>Connexion</h2>
                     <p class="auth-subtitle">Accédez à votre compte Brique-à-Brac</p>
 
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        <span>Adresse mail ou mot de passe incorrect !</span>
+                    </div>
+
                     <div class="mb-3">
                         <label for="email" class="form-label">Adresse e-mail</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="jean@exemple.fr">
@@ -66,9 +71,9 @@ if(!empty($_POST)){
                         <a href="#" class="small">Mot de passe oublié ?</a>
                     </div>
 
-                    <input type="submit" class="btn btn-auth">
+                    <button type="submit" class="btn btn-auth">
                         <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
-                    </input>
+                    </button>
 
                     <div class="auth-link">
                         Pas encore de compte ? <a href="register.php">Créer un compte</a>

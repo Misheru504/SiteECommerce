@@ -17,6 +17,11 @@ $pageTitle = 'Inscription';
                 <h2>Inscription</h2>
                 <p class="auth-subtitle">Rejoignez la communauté Brique-à-Brac !</p>
 
+                <div class="alert alert-danger d-flex align-items-center" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span>Le formulaire est incomplet ou contient une erreur !</span>
+                </div>
+
                 <div class="row g-3">
                     <div class="col-6">
                         <label for="firstname" class="form-label">Prénom</label>

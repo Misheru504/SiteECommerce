@@ -1,5 +1,9 @@
 <!-- Navbar -->
 <?php
+
+/** URL racine du site */
+const BASE_URL = 'http://localhost/ecommerce';
+
 /**
  * @var $currentPage string Page actuelle sur la barre de navigation
  */
