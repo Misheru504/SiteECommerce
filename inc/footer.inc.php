@@ -6,7 +6,7 @@
                 <h5 class="footer-brand">
                     <i class="bi bi-bricks me-2"></i>Brique-à-Brac
                 </h5>
-                <p class="text-muted mb-0">
+                <p class="mb-0">
                     Votre boutique en ligne de sets et figurines LEGO.
                     Des briques, de la passion, et des prix sympas !
                 </p>
@@ -16,9 +16,9 @@
             <div class="col-lg-2 col-md-6">
                 <h6 class="footer-title">Navigation</h6>
                 <ul class="list-unstyled footer-links">
-                    <li><a href="index.php">Accueil</a></li>
-                    <li><a href="boutique.php">Boutique</a></li>
-                    <li><a href="panier.php">Panier</a></li>
+                    <li><a href="<?php echo BASE_URL ?>">Accueil</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage" ?>">Boutique</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Panier&action=showCartPage"?>">Panier</a></li>
                 </ul>
             </div>
 
@@ -26,10 +26,10 @@
             <div class="col-lg-2 col-md-6">
                 <h6 class="footer-title">Mon compte</h6>
                 <ul class="list-unstyled footer-links">
-                    <li><a href="login.php">Connexion</a></li>
-                    <li><a href="register.php">Inscription</a></li>
-                    <li><a href="profil.php">Mon profil</a></li>
-                    <li><a href="commande.php">Mes commandes</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Authentification&action=showLoginPage" ?>">Connexion</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Authentification&action=showRegisterPage" ?>">Inscription</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Profil&action=showProfilePage&tab=info" ?>">Mon profil</a></li>
+                    <li><a href="<?php echo BASE_URL . "?controller=Profil&action=showProfilePage&tab=orders" ?>">Mes commandes</a></li>
                 </ul>
             </div>
 

@@ -46,7 +46,7 @@
                     <?php foreach ($cartItems as $item): ?>
                         <div class="cart-item">
                             <div class="cart-item-img">
-                                <span class="placeholder-text" style="font-size: 0.7rem;">IMG</span>
+                                <img class="product-img" src="<?php echo BASE_URL . "/img/" . $item->getId() . ".jpg" ?>" alt="<?php echo $item->getNom(); ?>">
                             </div>
                             <div class="cart-item-info">
                                 <div class="cart-item-name">
@@ -98,7 +98,7 @@
                             <span><?php echo number_format($total, 2, ',', ' '); ?> &euro;</span>
                         </div>
 
-                        <a href="commande.php" class="btn btn-checkout mt-3">
+                        <a href="<?php echo BASE_URL . "?controller=Commande&action=showCommandePage" ?>" class="btn btn-checkout mt-3">
                             <i class="bi bi-credit-card me-2"></i>Passer commande
                         </a>
 

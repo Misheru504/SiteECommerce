@@ -151,7 +151,7 @@ $statusLabels = [
                                                 ?>
                                                 <div class="order-item">
                                                     <div class="order-item-img">
-                                                        <span class="placeholder-text" style="font-size: 0.6rem;">IMG</span>
+                                                        <img class="product-img" src="<?php echo BASE_URL . "/img/" . $itemObj->getId() . ".jpg" ?>" alt="<?php echo $itemObj->getNom(); ?>">
                                                     </div>
                                                     <div class="order-item-info">
                                                         <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $itemObj->getId() ?>" class="order-item-name">

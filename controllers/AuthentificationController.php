@@ -71,7 +71,7 @@ class AuthentificationController
      */
     public static function requireAuthentification(): void
     {
-        if(!isset($_SESSION['user_id']))
+        if(!self::isConnected())
         {
             self::redirectToLogin();
         }
@@ -88,6 +88,16 @@ class AuthentificationController
         session_regenerate_id(true);
 
         self::redirectToLogin();
+    }
+
+    /**
+     * Vérifie si un utilisateur est connecté
+     *
+     * @return bool True si un utilisateur est connecté | Faux si aucun utilisateur n'est connecté
+     */
+    public static function isConnected(): bool
+    {
+        return isset($_SESSION['user_id']);
     }
 
     /**
