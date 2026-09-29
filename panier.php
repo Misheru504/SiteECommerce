@@ -23,10 +23,9 @@ ProduitsData::connexion();
 foreach ($cart as $productId => $qty) {
     $p = ProduitsData::getProduitById($productId);
     if ($p) {
-        $p['qty'] = $qty;
-        $p['total'] = $p['Prix'] * $qty;
+        $total = $p->getPrix() * $qty;
         $cartItems[] = $p;
-        $subtotal += $p['total'];
+        $subtotal += $total;
     }
 }
 
@@ -75,19 +74,19 @@ $total = $subtotal + $shipping;
                                 </div>
                                 <div class="cart-item-info">
                                     <div class="cart-item-name">
-                                        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $item['IdProduit']; ?>">
-                                            <?php echo htmlspecialchars($item['NomProduit']); ?>
+                                        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $item->getId(); ?>">
+                                            <?php echo htmlspecialchars($item->getNom()); ?>
                                         </a>
                                     </div>
-                                    <div class="cart-item-theme"><?php echo htmlspecialchars($item['Franchise']); ?></div>
+                                    <div class="cart-item-theme"><?php echo htmlspecialchars($item->getFranchise()); ?></div>
                                 </div>
                                 <div class="cart-quantity">
                                     <button class="btn">-</button>
-                                    <span><?php echo $item['qty']; ?></span>
+                                    <span><?php echo 2; ?></span>
                                     <button class="btn">+</button>
                                 </div>
                                 <div class="cart-item-price">
-                                    <?php echo number_format($item['total'], 2, ',', ' '); ?> &euro;
+                                    <?php echo number_format(2, 2, ',', ' '); ?> &euro;
                                 </div>
                                 <a href="#" class="cart-item-remove" title="Supprimer">
                                     <i class="bi bi-trash3"></i>

@@ -369,18 +369,68 @@ GRANT ALL ON BriqueABrac.* TO BAB_app@localhost WITH GRANT OPTION;
 GRANT CREATE USER ON *.* TO BAB_app@localhost;
 FLUSH PRIVILEGES;
 
-INSERT INTO Utilisateur (idUtilisateur, email, motDePasse) VALUES (1, 'cedric@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'); -- Mot de passe est 'passwd'. Obtenu avec password_hash
-INSERT INTO Client (idClient, nom, prenom, ville, adresse, codePostal, numeroTelephone, dateInscription, idUtilisateur) VALUES (1, 'Perez', 'Cédric', 'Montpellier', '15 Rue des Oliviers', '34000', '0612345678', '2025-12-15', 1);
+-- === AUTRES CLIENTS === (mot de passe 'passwd' pour tous)
+INSERT INTO Utilisateur (idUtilisateur, email, motDePasse) VALUES
+(1, 'cedric.perez@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'),
+(2, 'lea.martin@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'),
+(3, 'thomas.bernard@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'),
+(4, 'camille.dubois@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'),
+(5, 'hugo.lefebvre@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK'),
+(6, 'manon.girard@email.com', '$2y$12$Pzozvyatd3KbaUF2Q5/QQu4fUMcSFeFns6EBXBctkGz1x9NBuDCFK');
 
-INSERT INTO Panier (idProduit, idClient, qte) VALUES (55, 1, 3); -- Mercedes F1
-INSERT INTO Panier (idProduit, idClient, qte) VALUES (51, 1, 1); -- Château de Neuschwanstein
-INSERT INTO Panier (idProduit, idClient, qte) VALUES (25, 1, 2); -- Dracaufeu vs Voltali : le combat ultime
+INSERT INTO Client (idClient, nom, prenom, ville, adresse, codePostal, numeroTelephone, dateInscription, idUtilisateur) VALUES
+(1, 'Perez', 'Cédric', 'Montpellier', '15 Rue des Oliviers', '34000', '0612345678', '2025-12-15', 1),
+(2, 'Martin', 'Léa', 'Lyon', '8 Avenue Jean Jaurès', '69007', '0623456789', '2025-10-03', 2),
+(3, 'Bernard', 'Thomas', 'Toulouse', '42 Rue du Taur', '31000', '0734567890', '2026-01-22', 3),
+(4, 'Dubois', 'Camille', 'Nantes', '3 Place du Commerce', '44000', '0645678901', '2026-03-08', 4),
+(5, 'Lefebvre', 'Hugo', 'Lille', '27 Rue de la Monnaie', '59800', '0656789012', '2026-05-17', 5),
+(6, 'Girard', 'Manon', 'Bordeaux', '11 Cours de l''Intendance', '33000', '0767890123', '2026-08-30', 6);
+
+INSERT INTO Panier (idProduit, idClient, qte) VALUES
+(55, 1, 3), -- Mercedes F1
+(51, 1, 1), -- Château de Neuschwanstein
+(22, 2, 1), -- Pikachu et Poké Ball
+(24, 2, 2), -- Mini Centre Pokémon
+(10, 3, 1), -- UCS Jango Fett Firespray
+(16, 3, 1), -- Casque Jango Fett
+(30, 4, 1), -- Hôpital de Heartlake City
+(5, 4, 3),  -- Anna et Elsa miniatures
+(43, 5, 1), -- Lamborghini Countach
+(53, 5, 2); -- Ferrari F1
+-- Manon Girard (6) n'a pas de panier
 
 INSERT INTO Commande (idCommande, dateCommande, dateLivraison, idClient) VALUES
+(3, '2025-11-20 09:12:47', ADDDATE(dateCommande, INTERVAL 5 DAY), 2),
+(4, '2026-04-02 18:45:03', ADDDATE(dateCommande, INTERVAL 7 DAY), 2),
+(5, '2026-02-10 21:05:39', ADDDATE(dateCommande, INTERVAL 10 DAY), 3),
+(6, '2026-06-14 11:30:00', ADDDATE(dateCommande, INTERVAL 4 DAY), 4),
+(7, NOW(), null, 5),
+(8, '2026-09-02 16:20:18', ADDDATE(dateCommande, INTERVAL 6 DAY), 6),
+(9, NOW(), null, 6),
 (1, '2026-02-15 14:30:25', ADDDATE(dateCommande, INTERVAL 15 DAY), 1),
 (2, NOW(), null, 1);
 
 INSERT INTO DetailCommande (idProduit, idCommande, qte) VALUES
+(23, 3, 1), -- Évoli
+(25, 3, 1), -- Dracaufeu vs Voltali : le combat ultime
+
+(49, 4, 2), -- Bouquet de fleurs
+
+(9, 5, 1),  -- Grogu
+(11, 5, 1), -- Casque AT-AT Driver
+(17, 5, 1), -- UCS AT-ST
+
+(27, 6, 1), -- Caserne de Pompiers
+(28, 6, 2), -- Course de Moto de Police
+
+(47, 7, 1), -- F1 Oracle Red Bull Racing RB20
+(54, 7, 1), -- McLaren F1
+(55, 7, 1), -- Mercedes F1
+
+(52, 8, 1), -- Le Terrier
+
+(48, 9, 1), -- Place Médiévale
+(51, 9, 1), -- Château de Neuschwanstein
 (1, 1, 2),  -- Apollo Saturn V
 (56, 1, 1), -- Camion de Commande de Sonic
 
