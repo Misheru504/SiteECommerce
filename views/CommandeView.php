@@ -1,10 +1,10 @@
 <?php
-$currentPage = 'commande';
-$pageTitle = 'Commande';
-
 /**
  * Page de commande — maquette statique.
  * Le traitement PHP (facture, validation) sera ajouté plus tard.
+ *
+ * @var $pageTitle string Titre de la page
+ * @var $currentPage Page actuelle
  */
 ?>
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ $pageTitle = 'Commande';
                 <!-- Formulaire de livraison -->
                 <div class="col-lg-7">
                     <div class="auth-card">
-                        <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2 text-orange"></i>Adresse de livraison</h4>
+                        <h4 class="fw-bold mb-3"><i class="bi bi-geo-alt me-2 text-orange"></i>Adresse de livraison et facturation</h4>
 
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -68,21 +68,6 @@ $pageTitle = 'Commande';
                         <hr class="my-4">
 
                         <h4 class="fw-bold mb-3"><i class="bi bi-credit-card me-2 text-orange"></i>Paiement</h4>
-
-                        <div class="mb-3">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="radio" name="payment" id="payCard" checked>
-                                <label class="form-check-label fw-600" for="payCard">
-                                    <i class="bi bi-credit-card-2-front me-1"></i>Carte bancaire
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="payment" id="payPaypal">
-                                <label class="form-check-label fw-600" for="payPaypal">
-                                    <i class="bi bi-paypal me-1"></i>PayPal
-                                </label>
-                            </div>
-                        </div>
 
                         <div class="row g-3">
                             <div class="col-12">
