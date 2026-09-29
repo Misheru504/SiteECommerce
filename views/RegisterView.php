@@ -1,13 +1,16 @@
 <?php
-$currentPage = 'register';
-$pageTitle = 'Inscription';
+/**
+ * @var $pageTitle string Titre de la page
+ * @var $currentPage string Page actuelle
+ * @var $errorMessage ?string Message d'erreur
+ */
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <?php include('inc/header.inc.php'); ?>
-</head>
-<body>
+    <head>
+        <?php include('inc/header.inc.php'); ?>
+    </head>
+    <body>
     <?php include('inc/navbar.inc.php'); ?>
 
     <section class="py-5">
@@ -17,10 +20,12 @@ $pageTitle = 'Inscription';
                 <h2>Inscription</h2>
                 <p class="auth-subtitle">Rejoignez la communauté Brique-à-Brac !</p>
 
+                <?php if(isset($errorMessage)): ?>
                 <div class="alert alert-danger d-flex align-items-center" role="alert">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    <span>Le formulaire est incomplet ou contient une erreur !</span>
+                    <span><?php echo $errorMessage ?></span>
                 </div>
+                <?php endif; ?>
 
                 <div class="row g-3">
                     <div class="col-6">
@@ -60,12 +65,12 @@ $pageTitle = 'Inscription';
                 </button>
 
                 <div class="auth-link">
-                    Déjà un compte ? <a href="login.php">Se connecter</a>
+                    Déjà un compte ? <a href="<?php echo BASE_URL . "?controller=Authentification&action=showLoginPage" ?>">Se connecter</a>
                 </div>
             </div>
         </div>
     </section>
 
     <?php include('inc/footer.inc.php'); ?>
-</body>
+    </body>
 </html>

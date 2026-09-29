@@ -8,6 +8,7 @@ include('inc/products_data.inc.php');
  * À remplacer par $_SESSION['cart'] quand la BDD sera en place.
  * Structure : id produit => quantité
  */
+
 $cart = [
     1 => 1,   // Millennium Falcon
     2 => 2,   // Iron Man MK50

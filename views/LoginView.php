@@ -15,7 +15,7 @@
 
         <section class="py-5">
             <div class="auth-container">
-                <form action="" method="POST">
+                <form action="<?php echo BASE_URL . "/index.php?controller=Authentification&action=attemptLogin"?>" method="POST">
                     <div class="auth-card">
                         <h2><i class="bi bi-person-circle text-orange"></i></h2>
                         <h2>Connexion</h2>
@@ -51,7 +51,7 @@
                         </button>
 
                         <div class="auth-link">
-                            Pas encore de compte ? <a href="register.php">Créer un compte</a>
+                            Pas encore de compte ? <a href="<?php echo BASE_URL . "?controller=Authentification&action=showRegisterPage"?>">Créer un compte</a>
                         </div>
                     </div>
                 </form>

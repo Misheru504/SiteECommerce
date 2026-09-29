@@ -1,8 +1,10 @@
 <!-- Navbar -->
 <?php
 
-/** URL racine du site */
-const BASE_URL = 'http://localhost/ecommerce';
+print_r($_SESSION);
+
+/** URL racine du site (temporaire, déjà défini dans index.php pour les pages MVC) */
+defined('BASE_URL') ?: define('BASE_URL', 'http://localhost/ecommerce');
 
 /**
  * @var $currentPage string Page actuelle sur la barre de navigation
@@ -11,7 +13,7 @@ const BASE_URL = 'http://localhost/ecommerce';
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <!-- Logo / Nom du site -->
-        <a class="navbar-brand d-flex align-items-center" href="index.php">
+        <a class="navbar-brand d-flex align-items-center" href="<?php echo BASE_URL; ?>">
             <i class="bi bi-bricks me-2"></i>
             <span>Brique-à-Brac</span>
         </a>
@@ -25,7 +27,7 @@ const BASE_URL = 'http://localhost/ecommerce';
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <?php echo ($currentPage ?? '') === 'accueil' ? 'active' : ''; ?>" href="index.php">
+                    <a class="nav-link <?php echo ($currentPage ?? '') === 'accueil' ? 'active' : ''; ?>" href="<?php echo BASE_URL ?>">
                         <i class="bi bi-house-door me-1"></i>Accueil
                     </a>
                 </li>
@@ -38,7 +40,7 @@ const BASE_URL = 'http://localhost/ecommerce';
 
             <!-- Icônes à droite -->
             <div class="d-flex align-items-center gap-3">
-                <a href="panier.php" class="nav-icon-link position-relative" title="Panier">
+                <a href="<?php echo BASE_URL . "/panier.php" ?>" class="nav-icon-link position-relative" title="Panier">
                     <i class="bi bi-cart3"></i>
                     <span class="badge-cart">3</span>
                 </a>
@@ -49,23 +51,23 @@ const BASE_URL = 'http://localhost/ecommerce';
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="profil.php?tab=orders">
+                            <a class="dropdown-item" href="<?php echo BASE_URL . "?controller=Profil&action=showProfilePage&tab=orders"?>">
                                 <i class="bi bi-bag-check me-2"></i>Mes commandes
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="profil.php?tab=info">
+                            <a class="dropdown-item" href="<?php echo BASE_URL . "?controller=Profil&action=showProfilePage&tab=info"?>">
                                 <i class="bi bi-person-gear me-2"></i>Mes informations
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <a class="dropdown-item" href="login.php">
+                            <a class="dropdown-item" href="<?php echo BASE_URL . "?controller=Authentification&action=showLoginPage"?>">
                                 <i class="bi bi-box-arrow-in-right me-2"></i>Connexion
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="register.php">
+                            <a class="dropdown-item" href="<?php echo BASE_URL . "?controller=Authentification&action=showRegisterPage"?>">
                                 <i class="bi bi-person-plus me-2"></i>Inscription
                             </a>
                         </li>

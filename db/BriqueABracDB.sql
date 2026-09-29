@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS Token (
     idToken INT NOT NULL AUTO_INCREMENT,
     tokenHash CHAR(64) NOT NULL UNIQUE,
     dateExpiration DATETIME NOT NULL,
-    nomAppareil VARCHAR(50),
+    nomAppareil VARCHAR(100),
 
     idUtilisateur INT NOT NULL,
 
