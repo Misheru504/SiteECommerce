@@ -10,8 +10,6 @@ class BoutiqueController
      */
     public static function showShopPage(array $params): void
     {
-        AuthentificationController::requireAuthentification();
-
         $pageTitle = 'Boutique';
         $currentPage = 'boutique';
 

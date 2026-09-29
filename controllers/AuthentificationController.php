@@ -52,7 +52,8 @@ class AuthentificationController
                     $errorMessage = 'Adresse mail ou mot de passe incorrect!';
                 } else {
                     $_SESSION['user_id'] = $isConnected;
-                    $errorMessage = 'Connexion réussie !';
+                    header("Location: " . BASE_URL . "?controller=Profil&action=showProfilePage&tab=orders");
+                    exit;
                 }
             }
             else
@@ -61,8 +62,7 @@ class AuthentificationController
             }
         }
 
-        header("Location: " . BASE_URL . "?controller=Authentification&action=showLoginPage" . (isset($errorMessage) ? "&error=" . $errorMessage : null));
-        exit;
+        self::redirectToLogin($errorMessage);
     }
 
     /**
@@ -73,8 +73,32 @@ class AuthentificationController
     {
         if(!isset($_SESSION['user_id']))
         {
-            header("Location: " . BASE_URL . "?controller=Authentification&action=showLoginPage");
-            exit;
+            self::redirectToLogin();
         }
+    }
+
+    /**
+     * Déconnecte un utilisateur et affiche la page de connexion
+     *
+     * @return void
+     */
+    public static function logout(): void
+    {
+        unset($_SESSION['user_id']);
+        session_regenerate_id(true);
+
+        self::redirectToLogin();
+    }
+
+    /**
+     * Redirige l'utilisateur vers la page de connexion
+     *
+     * @param string|null $errorMessage Message d'erreur (optionel)
+     * @return void
+     */
+    public static function redirectToLogin(?string $errorMessage = null): void
+    {
+        header("Location: " . BASE_URL . "?controller=Authentification&action=showLoginPage" . (isset($errorMessage) ? "&error=" . $errorMessage : null));
+        exit;
     }
 }

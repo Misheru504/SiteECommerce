@@ -36,7 +36,7 @@ class DatabaseManager {
      * @param array|null $stmtParams Paramètres de la requête
      * @param int|null $limit Limite de la requête (remplace le placeholder :limit dans la requête)
      * @param int|null $offset Offset de la requête (remplace le placeholder :offset dans la requête)
-     * @return array<string, string> Tableau du résultat SQL
+     * @return array<array<string, mixed>> Tableau du résultat SQL
      */
     public static function sendRequest(string $request, ?array $stmtParams = null, ?int $limit = null, ?int $offset = null): array
     {

@@ -1,7 +1,7 @@
 <!-- Navbar -->
 <?php
 
-print_r($_SESSION);
+if(!empty($_SESSION)) print_r($_SESSION);
 
 /** URL racine du site (temporaire, déjà défini dans index.php pour les pages MVC) */
 defined('BASE_URL') ?: define('BASE_URL', 'http://localhost/ecommerce');
