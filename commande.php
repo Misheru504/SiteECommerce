@@ -1,7 +1,6 @@
 <?php
 $currentPage = 'commande';
 $pageTitle = 'Commande';
-include('inc/products_data.inc.php');
 
 /**
  * Page de commande — maquette statique.
@@ -21,8 +20,8 @@ include('inc/products_data.inc.php');
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-                    <li class="breadcrumb-item"><a href="panier.php">Panier</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>">Accueil</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo BASE_URL . "?controller=Panier&action=showCartPage" ?>">Panier</a></li>
                     <li class="breadcrumb-item active">Commande</li>
                 </ol>
             </nav>

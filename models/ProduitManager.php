@@ -114,7 +114,7 @@ class ProduitManager
      * Transforme un tableau SQL en liste d'objet Produit
      *
      * @param array $produits Tableau SQL des produits
-     * @return array<string, string> Liste d'objets Produit
+     * @return array<Produit> Liste d'objets Produit
      */
     private static function parseSqlDansArray(array $produits): array
     {

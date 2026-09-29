@@ -1,9 +1,7 @@
 <?php
 
-require("inc/products_data.inc.php");
-
 require_once('class/Commande.class.php');
-require_once('class/Produit.class.php');
+require_once('models/Produit.php');
 
 require("models/DatabaseManager.php");
 require("controllers/AuthentificationController.php");

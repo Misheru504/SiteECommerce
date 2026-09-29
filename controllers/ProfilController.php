@@ -5,7 +5,7 @@ class ProfilController
     /**
      * Affiche la page du profil
      *
-     * @param array $params
+     * @param array<string, mixed> $params Paramètres GET
      * @return void
      */
     public static function showProfilePage(array $params): void

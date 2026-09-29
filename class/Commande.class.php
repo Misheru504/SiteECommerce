@@ -1,5 +1,4 @@
 <?php
-require_once 'Produit.class.php';
 class Commande
 {
     private int $idCommande;

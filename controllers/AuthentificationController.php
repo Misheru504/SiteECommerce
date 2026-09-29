@@ -5,7 +5,7 @@ class AuthentificationController
     /**
      * Affiche la page de connexion du site
      *
-     * @param array $params Paramètres GET
+     * @param array<string, mixed> $params Paramètres GET
      * @return void
      */
     public static function showLoginPage(array $params): void
@@ -20,7 +20,7 @@ class AuthentificationController
     /**
      * Affiche la page d'inscription du site
      *
-     * @param array $params Paramètres GET
+     * @param array<string, mixed> $params Paramètres GET
      * @return void
      */
     public static function showRegisterPage(array $params): void
@@ -34,9 +34,9 @@ class AuthentificationController
 
     /**
      * Effectue une tentative de connexion au site. En cas d'echec, l'utilisateur est renvoyé sur la page de connexion<br>
-     * <b>Remarque: le login et le mot de passe doivent être passer à cette action par une requête POST</b>
+     * <b>Remarque : le login et le mot de passe doivent être passer à cette action par une requête POST</b>
      *
-     * @param array $params Paramètres GET
+     * @param array<string, mixed> $params Paramètres GET
      * @return void
      */
     public static function attemptLogin(array $params): void

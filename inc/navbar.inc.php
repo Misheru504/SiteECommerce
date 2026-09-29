@@ -2,6 +2,8 @@
 <?php
 
 if(!empty($_SESSION)) print_r($_SESSION);
+print_r("<br>");
+if(!empty($_COOKIE)) print_r($_COOKIE);
 
 /** URL racine du site (temporaire, déjà défini dans index.php pour les pages MVC) */
 defined('BASE_URL') ?: define('BASE_URL', 'http://localhost/ecommerce');
@@ -40,7 +42,7 @@ defined('BASE_URL') ?: define('BASE_URL', 'http://localhost/ecommerce');
 
             <!-- Icônes à droite -->
             <div class="d-flex align-items-center gap-3">
-                <a href="<?php echo BASE_URL . "/panier.php" ?>" class="nav-icon-link position-relative" title="Panier">
+                <a href="<?php echo BASE_URL . "?controller=Panier&action=showCartPage" ?>" class="nav-icon-link position-relative" title="Panier">
                     <i class="bi bi-cart3"></i>
                     <span class="badge-cart">3</span>
                 </a>

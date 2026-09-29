@@ -20,7 +20,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo BASE_URL?>">Accueil</a></li>
                 <li class="breadcrumb-item"><a href="<?php echo BASE_URL . "?controller=Boutique&action=showShopPage"?>">Boutique</a></li>
                 <li class="breadcrumb-item active"><?php echo $pageTitle; ?></li>
             </ol>
@@ -86,7 +86,7 @@
                     </div>
 
                     <!-- Ajouter au panier -->
-                    <a href="panier.php?add=<?php echo $produitObj->getId() ?>" class="btn btn-add-cart btn-lg w-100">
+                    <a href="<?php echo BASE_URL . "?controller=Panier&action=add&id=" . $produitObj->getId()?>" class="btn btn-add-cart btn-lg w-100">
                         <i class="bi bi-cart-plus me-2"></i>Ajouter au panier
                     </a>
                 </div>
