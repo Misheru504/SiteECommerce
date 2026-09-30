@@ -12,6 +12,7 @@ class BoutiqueController
     {
         $pageTitle = 'Boutique';
         $currentPage = 'boutique';
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
 
         $filterCategory = $params['cat'] ?? 'all';
         $filterTheme = $params['theme'] ?? 'all';

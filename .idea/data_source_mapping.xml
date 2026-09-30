@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/db/BriqueABracDB.sql" value="b17d2e77-28dc-42e7-b1b3-51c0b1eefece" />
     <file url="file://$PROJECT_DIR$/models/AuthentificationManager.php" value="f12f8eb5-6e9a-4603-ac60-9cf16bce87bf" />
     <file url="file://$PROJECT_DIR$/models/ProduitManager.php" value="f12f8eb5-6e9a-4603-ac60-9cf16bce87bf" />
+    <file url="file://$PROJECT_DIR$/models/ProfilManager.php" value="f12f8eb5-6e9a-4603-ac60-9cf16bce87bf" />
     <file url="file://$PROJECT_DIR$/models/TokenManager.php" value="f12f8eb5-6e9a-4603-ac60-9cf16bce87bf" />
   </component>
 </project>

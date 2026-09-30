@@ -1,6 +1,6 @@
 <?php
 /**
- * @var Produit $product
+ * @var Produit $product Produit à partir du quel on construit la carte
  */
 ?>
 <div class="col">
@@ -27,16 +27,16 @@
 
             <!-- Infos -->
             <div class="product-meta">
-                    <span><i class="bi bi-puzzle me-1"></i><?php echo $product->getNbPieces(); ?> pièces</span>
+                <span><i class="bi bi-puzzle me-1"></i><?php echo $product->getNbPieces(); ?> pièces</span>
                 <span><i class="bi bi-person me-1"></i><?php echo $product->getAge(); ?></span>
             </div>
 
             <!-- Prix -->
             <div class="product-price mt-auto">
                 <?php if ($product->getPromo() != 0): ?>
-                    <span class="old-price"><?php echo $product->getOldPrice(); ?> &euro;</span>
+                    <span class="old-price"><?php echo Produit::formatPrice($product->getOldPrice()); ?> &euro;</span>
                 <?php endif; ?>
-                <span class="current-price"><?php echo $product->getPrix(); ?> &euro;</span>
+                <span class="current-price"><?php echo Produit::formatPrice($product->getPrix()); ?> &euro;</span>
             </div>
 
             <!-- Bouton -->

@@ -14,16 +14,13 @@ class ProfilController
 
         $pageTitle = 'Mon Profil';
         $currentPage = 'profil';
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
         $activeTab = $params['tab'] ?? 'orders';
         $currentUserId = $_SESSION['user_id'];
 
-        $user = DatabaseManager::sendRequest('SELECT idclient, nomclient, prenomclient, mailclient, numerotelclient, adresse, ville, codepostal, dateinscription FROM v_Users WHERE IdClient = ?', [$currentUserId])[0];
-        $commandesArray = DatabaseManager::sendRequest('SELECT idCommande, dateCommande, dateLivraison FROM Commande WHERE idClient = ? ORDER BY dateCommande DESC;', [$currentUserId]);
-        $commandes = [];
-        foreach ($commandesArray as $commande)
-        {
-            $commandes[] = new Commande($commande);
-        }
+        $user = ProfilManager::getProfilFromUserId($currentUserId);
+        if(!isset($user)) die("Utilisateur introuvable");
+        $commandes = CommandeManager::getCommandesFromClient($currentUserId);
 
         require('views/ProfilView.php');
     }

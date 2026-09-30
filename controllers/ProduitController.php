@@ -11,6 +11,7 @@ class ProduitController
     public static function showProductPage(array $params): void
     {
         $currentPage = 'produit';
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
 
         // Récupérer l'ID du produit
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

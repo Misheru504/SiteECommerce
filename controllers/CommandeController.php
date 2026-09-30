@@ -12,6 +12,7 @@ class CommandeController
     {
         $currentPage = 'commande';
         $pageTitle = 'Commande';
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
 
         require  ROOT_PATH . '/views/CommandeView.php';
     }

@@ -1,12 +1,9 @@
 <!-- Navbar -->
 <?php
 
-if(!empty($_SESSION)) print_r($_SESSION);
-print_r("<br>");
-if(!empty($_COOKIE)) print_r($_COOKIE);
-
 /**
  * @var $currentPage string Page actuelle sur la barre de navigation
+ * @var $nbPanier int|null Nombre d'articles dans le panier
  */
 ?>
 <nav class="navbar navbar-expand-lg sticky-top">
@@ -41,7 +38,9 @@ if(!empty($_COOKIE)) print_r($_COOKIE);
             <div class="d-flex align-items-center gap-3">
                 <a href="<?php echo BASE_URL . "?controller=Panier&action=showCartPage" ?>" class="nav-icon-link position-relative" title="Panier">
                     <i class="bi bi-cart3"></i>
-                    <span class="badge-cart">3</span>
+                    <?php if (AuthentificationController::isConnected()): ?>
+                        <span class="badge-cart"><?php echo $nbPanier ?></span>
+                    <?php endif ?>
                 </a>
                 <!-- Menu compte (dropdown) -->
                 <div class="dropdown">

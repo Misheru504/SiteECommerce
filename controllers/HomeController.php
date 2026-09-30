@@ -10,10 +10,11 @@ class HomeController
      */
     public static function showMainPage(array $params): void
     {
-        $produitsEnPromo = ProduitManager::getProduitsEnPromotion();
-
         $pageTitle = "Accueil";
         $currentPage = "accueil";
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
+
+        $produitsEnPromo = ProduitManager::getProduitsEnPromotion();
 
         require ROOT_PATH . '/views/HomeView.php';
     }

@@ -14,34 +14,21 @@ class PanierController
 
         $pageTitle = 'Mon Panier';
         $currentPage = 'panier';
+        $userId = $_SESSION['user_id'];
+        $nbPanier = PanierManager::getPanierCountFromClient($userId);
 
-        /**
-         * Panier en dur pour la maquette.
-         * À remplacer par $_SESSION['cart'] quand la BDD sera en place.
-         * Structure : id produit => quantité
-         */
-
-        $cart = [
-            1 => 1,   // Millennium Falcon
-            2 => 2,   // Iron Man MK50
-        ];
+        $cart = PanierManager::getPanierFromClient($userId);
 
         $cartItems = [];
         $subtotal = 0;
 
-        require_once 'models/Produit.php';
-        require_once 'models/ProduitManager.php';
-        require_once 'models/DatabaseManager.php';
-
         foreach ($cart as $productId => $qty) {
             $p = ProduitManager::getProduitById($productId);
             if ($p) {
-                $total = (int) $p->getPrix() * $qty;
+                $subtotal += $p->getPrix() * $qty;
                 $cartItems[] = $p;
-                $subtotal += $total;
             }
         }
-
 
         $shipping = $subtotal >= 50 ? 0 : 5.99;
         $total = $subtotal + $shipping;

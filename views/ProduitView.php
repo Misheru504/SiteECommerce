@@ -4,7 +4,7 @@
  * @var $currentPage string Page navbar
  * @var $produitObj Produit Produit de la page
  * @var $id int Identifiant du produit de la page
- * @var $similaire array<Produit> Produit similaire au produit actuel
+ * @var $similaire array<Produit> Produits similaire au produit actuel
  */
 ?>
 <!DOCTYPE html>
@@ -53,11 +53,11 @@
                     <div class="product-price mb-3">
                         <?php if ($produitObj->getPromo() != 0): ?>
                             <span class="old-price" style="font-size: 1.1rem;">
-                                    <?php echo $produitObj->getOldPrice(); ?> &euro;
+                                    <?php echo Produit::formatPrice($produitObj->getOldPrice()); ?> &euro;
                                 </span>
                         <?php endif; ?>
                         <span class="current-price" style="font-size: 1.75rem;">
-                                <?php echo $produitObj->getPrix(); ?> &euro;
+                                <?php echo Produit::formatPrice($produitObj->getPrix()); ?> &euro;
                             </span>
                         <?php if ($produitObj->getPromo() != 0): ?>
                             <span class="badge bg-danger ms-2">PROMO</span>
@@ -82,6 +82,10 @@
                         <div class="product-spec">
                             <i class="bi bi-tag"></i>
                             <span><?php echo $produitObj->getFranchise(); ?></span>
+                        </div>
+                        <div class="product-spec">
+                            <i class="bi bi-passport"></i>
+                            <span>Code : <?php echo $produitObj->getCodeSet(); ?></span>
                         </div>
                     </div>
 

@@ -25,7 +25,7 @@ class ProduitManager
         $sql = 'SELECT * FROM v_Produits WHERE IdProduit = ?';
         $result = DatabaseManager::sendRequest($sql, [$id]);
 
-        return !empty($result) ? new Produit($result[0]) : null;
+        return !empty($result) ? Produit::constructProduitFromSqlArray($result[0]) : null;
     }
 
     /**
@@ -123,7 +123,7 @@ class ProduitManager
         {
             foreach($produits as $produit)
             {
-                $listeProduits[] = new Produit($produit);
+                $listeProduits[] = Produit::constructProduitFromSqlArray($produit);
             }
         }
 

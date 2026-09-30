@@ -3,7 +3,7 @@
  * @var $pageTitle string Titre de la page
  * @var $currentPage string Page actuelle
  * @var $activeTab string Onglet actuel de la page
- * @var $user array<string, mixed> Utilisateur
+ * @var $user Profil Profil de l'utilisateur
  * @var $commandes array<Commande> Commandes de l'utilisateur
  */
 
@@ -48,11 +48,11 @@ $statusLabels = [
                         <!-- Avatar + nom -->
                         <div class="profile-avatar-section">
                             <div class="profile-avatar">
-                                <?php echo strtoupper($user['PrenomClient'][0] . $user['NomClient'][0]); ?>
+                                <?php echo strtoupper($user->getPrenomClient()[0] . $user->getNomClient()[0]); ?>
                             </div>
-                            <h5 class="mt-3 mb-0 fw-bold"><?php echo htmlspecialchars($user['PrenomClient'] . ' ' . $user['NomClient']); ?></h5>
+                            <h5 class="mt-3 mb-0 fw-bold"><?php echo htmlspecialchars($user->getPrenomClient() . ' ' . $user->getNomClient()); ?></h5>
                             <p class="text-muted small mb-0">
-                                Membre depuis <?php echo date('F Y', strtotime($user['DateInscription'])); ?>
+                                Membre depuis <?php echo date('F Y', strtotime($user->getDateinscription())); ?>
                             </p>
                         </div>
 
@@ -97,36 +97,15 @@ $statusLabels = [
                             <?php else: ?>
                                 <?php foreach ($commandes as $commande): ?>
                                     <?php
-                                    $produitsCommande = DatabaseManager::sendRequest('SELECT idProduit, qte FROM DetailCommande WHERE idCommande = ?', [$commande->getIdCommande()]);
-                                    foreach($produitsCommande as $produit)
-                                    {
-                                        $produitInfo = DatabaseManager::sendRequest('SELECT * FROM v_Produits WHERE IdProduit = ?', [$produit['idProduit']])[0];
-                                        $produitObj = new Produit($produitInfo);
-                                        $commande->addProduit($produitObj, $produit['qte']);
-                                    }
+                                    $statusBool = $commande->estLivree() ? 'delivered' : 'shipped';
 
-                                    $statusBool = $commande->estLivrée() ? 'delivered' : 'shipped';
-
-                                    // Calculer le total de la commande
-                                    $orderTotal = 0;
-                                    $orderItems = [];
-                                    foreach ($commande->getProduits() as $item) {
-                                        /** @var Produit $pObj */
-                                        $pObj = $item['produit'];
-                                        $p = [];
-                                        $p['produit'] = $item['produit'];
-                                        $p['qte'] = (int) $item['qte'];
-                                        $p['line_total'] = $pObj->prixUnformatted * (int) $item['qte'];
-                                        $orderItems[] = $p;
-                                        $orderTotal += $p['line_total'];
-                                    }
                                     $status = $statusLabels[$statusBool] ?? $statusLabels['pending'];
                                     ?>
                                     <div class="order-card">
                                         <!-- En-tête commande -->
                                         <div class="order-header">
                                             <div class="d-flex flex-wrap align-items-center gap-3">
-                                                <span class="order-id">CMD-<?php echo $commande->getIdCommande(); ?></span>
+                                                <span class="order-id">CMD-<?php echo $commande->getId(); ?></span>
                                                 <span class="badge <?php echo $status['class']; ?> rounded-pill">
                                                     <?php echo $status['label']; ?>
                                                 </span>
@@ -136,33 +115,35 @@ $statusLabels = [
                                                     <i class="bi bi-calendar3 me-1"></i>
                                                     <?php echo date('d/m/Y', strtotime($commande->getDateCommande())); ?>
                                                 </span>
+                                                <?php if ($commande->getDateLivraison() !== null): ?>
+                                                <span class="text-muted small">
+                                                    <i class="bi bi-truck me-1"></i>
+                                                    <?php echo date('d/m/Y', strtotime($commande->getDateLivraison())); ?>
+                                                </span>
+                                                <?php endif; ?>
                                                 <span class="order-total">
-                                                    <?php echo number_format($orderTotal, 2, ',', ' '); ?> &euro;
+                                                    <?php echo Produit::formatPrice($commande->getPrixTotal()) ?> &euro;
                                                 </span>
                                             </div>
                                         </div>
 
                                         <!-- Articles de la commande -->
                                         <div class="order-items">
-                                            <?php foreach ($orderItems as $item): ?>
-                                                <?php
-                                                /** @var Produit $itemObj */
-                                                $itemObj = $item['produit'];
-                                                ?>
+                                            <?php foreach ($commande->getProduits() as $produit): ?>
                                                 <div class="order-item">
                                                     <div class="order-item-img">
-                                                        <img class="product-img" src="<?php echo BASE_URL . "/img/" . $itemObj->getId() . ".jpg" ?>" alt="<?php echo $itemObj->getNom(); ?>">
+                                                        <img class="product-img" src="<?php echo BASE_URL . "/img/" . $produit->getId() . ".jpg" ?>" alt="<?php echo $produit->getNom(); ?>">
                                                     </div>
                                                     <div class="order-item-info">
-                                                        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $itemObj->getId() ?>" class="order-item-name">
-                                                            <?php echo $itemObj->getNom(); ?>
+                                                        <a href="<?php echo BASE_URL . "?controller=Produit&action=showProductPage&id=" . $produit->getId() ?>" class="order-item-name">
+                                                            <?php echo $produit->getNom(); ?>
                                                         </a>
                                                         <span class="order-item-detail">
-                                                            <?php echo $itemObj->getFranchise(); ?> — x<?php echo $item['qte']; ?>
+                                                            <?php echo $produit->getFranchise(); ?> — x<?php echo $commande->getProduitsQte()[$produit->getId()] ?>
                                                         </span>
                                                     </div>
                                                     <div class="order-item-price">
-                                                        <?php echo number_format($item['line_total'], 2, ',', ' '); ?> &euro;
+                                                        <?php echo Produit::formatPrice($produit->getPrix() * $commande->getProduitsQte()[$produit->getId()]) ?> &euro;
                                                     </div>
                                                 </div>
                                             <?php endforeach; ?>
@@ -184,22 +165,22 @@ $statusLabels = [
                                     <div class="col-md-6">
                                         <label for="firstname" class="form-label">Prénom</label>
                                         <input type="text" class="form-control" id="firstname"
-                                               value="<?php echo htmlspecialchars($user['PrenomClient']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getPrenomClient()); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="lastname" class="form-label">Nom</label>
                                         <input type="text" class="form-control" id="lastname"
-                                               value="<?php echo htmlspecialchars($user['NomClient']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getNomClient()); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">Adresse e-mail</label>
                                         <input type="email" class="form-control" id="email"
-                                               value="<?php echo htmlspecialchars($user['MailClient']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getMailClient()); ?>">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="phone" class="form-label">Téléphone</label>
                                         <input type="tel" class="form-control" id="phone"
-                                               value="<?php echo htmlspecialchars($user['NumeroTelClient']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getNumeroTelClient()); ?>">
                                     </div>
                                 </div>
                             </div>
@@ -211,17 +192,17 @@ $statusLabels = [
                                     <div class="col-12">
                                         <label for="address" class="form-label">Adresse</label>
                                         <input type="text" class="form-control" id="address"
-                                               value="<?php echo htmlspecialchars($user['Adresse']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getAdresse()); ?>">
                                     </div>
                                     <div class="col-md-4">
                                         <label for="zipcode" class="form-label">Code postal</label>
                                         <input type="text" class="form-control" id="zipcode"
-                                               value="<?php echo htmlspecialchars($user['CodePostal']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getCodePostal()); ?>">
                                     </div>
                                     <div class="col-md-8">
                                         <label for="city" class="form-label">Ville</label>
                                         <input type="text" class="form-control" id="city"
-                                               value="<?php echo htmlspecialchars($user['Ville']); ?>">
+                                               value="<?php echo htmlspecialchars($user->getVille()); ?>">
                                     </div>
                                 </div>
                             </div>

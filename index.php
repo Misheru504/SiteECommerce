@@ -1,6 +1,7 @@
 <?php
 
 date_default_timezone_set('Europe/Paris');
+setlocale(LC_ALL, 'fr_FR');
 session_start();
 
 error_reporting(E_ALL);

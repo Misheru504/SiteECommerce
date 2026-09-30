@@ -10,6 +10,8 @@ class AuthentificationController
      */
     public static function showLoginPage(array $params): void
     {
+        if(AuthentificationController::isConnected()) $nbPanier = PanierManager::getPanierCountFromClient($_SESSION['user_id']);
+
         $pageTitle = 'Connexion';
         $currentPage = 'login';
         $errorMessage = $params['error'] ?? null;
@@ -34,7 +36,7 @@ class AuthentificationController
 
     /**
      * Effectue une tentative de connexion au site. En cas d'echec, l'utilisateur est renvoyé sur la page de connexion<br>
-     * <b>Remarque : le login et le mot de passe doivent être passer à cette action par une requête POST</b>
+     * <b>Remarque : le login et le mot de passe doivent être passés à cette action par une requête POST</b>
      *
      * @param array<string, mixed> $params Paramètres GET
      * @return void
